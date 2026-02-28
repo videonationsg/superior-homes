@@ -6,7 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import PageHero from "@/components/ui/PageHero";
 import { homes } from "@/data/homes";
-import { Mail } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
 
 type Style = "All" | "Colonial" | "Modern" | "Mediterranean" | "Renovation";
 
@@ -30,38 +30,67 @@ export default function OurHomesPage() {
 
       <section className="py-20 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Filter bar */}
-          <div className="flex flex-wrap gap-2 mb-10">
+          {/* Section header */}
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-[#ff7302]/10 border border-[#ff7302]/30 text-[#ff7302] text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full mb-3">
+                Built Homes
+              </div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#f5f5f5] tracking-tight">
+                Browse Our Homes
+              </h2>
+            </div>
+            {/* Filter pills — desktop */}
+            <div className="hidden sm:flex flex-wrap gap-2">
+              {styles.map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setFilter(s)}
+                  className={`text-xs font-semibold px-4 py-2 rounded-full border transition-colors ${
+                    filter === s
+                      ? "bg-white border-white text-[#0a0a0a]"
+                      : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#ff7302] hover:text-[#ff7302]"
+                  }`}
+                >
+                  {s}
+                  {s !== "All" && (
+                    <span className="ml-1 opacity-60">
+                      ({homes.filter((h) => h.style === s).length})
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Filter pills — mobile */}
+          <div className="flex sm:hidden flex-wrap gap-2 mb-8">
             {styles.map((s) => (
               <button
                 key={s}
                 onClick={() => setFilter(s)}
                 className={`text-xs font-semibold px-4 py-2 rounded-full border transition-colors ${
                   filter === s
-                    ? "bg-[#ff7302] border-[#ff7302] text-white"
+                    ? "bg-white border-white text-[#0a0a0a]"
                     : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#ff7302] hover:text-[#ff7302]"
                 }`}
               >
                 {s}
-                {s !== "All" && (
-                  <span className="ml-1 text-current opacity-60">
-                    ({homes.filter((h) => h.style === s).length})
-                  </span>
-                )}
               </button>
             ))}
           </div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filtered.map((home, i) => (
               <button
                 key={home.slug}
                 onClick={() => setLightboxIndex(i)}
-                className="group bg-[#111111] border border-[#2a2a2a] rounded-sm overflow-hidden text-left hover:border-[#ff7302]/50 transition-all duration-200 cursor-pointer"
+                className="group text-left"
                 aria-label={`View ${home.name}`}
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                {/* Seed-style image frame */}
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#1a1a1a] mb-4 shadow-sm group-hover:shadow-[0_8px_32px_rgba(0,0,0,0.6)] transition-shadow duration-300">
                   <Image
                     src={home.image}
                     alt={home.name}
@@ -70,19 +99,33 @@ export default function OurHomesPage() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                   />
                   {home.featured && (
-                    <span className="absolute top-2 left-2 text-xs font-semibold bg-[#ff7302] text-white px-2 py-0.5 rounded-sm">
+                    <span className="absolute top-3 left-3 text-xs font-bold bg-[#ff7302] text-white px-3 py-1 rounded-full">
                       Featured
                     </span>
                   )}
+                  {/* Arrow icon — Seed-style */}
+                  <span className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <ArrowUpRight size={14} className="text-white" />
+                  </span>
                 </div>
-                <div className="p-4">
-                  <h3 className="text-[#f5f5f5] font-semibold text-sm mb-1">{home.name}</h3>
-                  <p className="text-[#a0a0a0] text-xs leading-relaxed line-clamp-2">
-                    {home.description}
-                  </p>
-                  <span className="mt-2 inline-block text-xs text-[#ff7302] font-medium">
+
+                {/* Card info below image */}
+                <div className="px-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="text-[#f5f5f5] font-bold text-sm leading-snug">
+                      {home.name}
+                    </h3>
+                    <ArrowUpRight
+                      size={15}
+                      className="text-[#a0a0a0] group-hover:text-[#ff7302] transition-colors flex-shrink-0 mt-0.5"
+                    />
+                  </div>
+                  <span className="mt-1 inline-block text-xs text-[#ff7302] font-semibold">
                     {home.style}
                   </span>
+                  <p className="text-[#a0a0a0] text-xs leading-relaxed line-clamp-2 mt-1">
+                    {home.description}
+                  </p>
                 </div>
               </button>
             ))}

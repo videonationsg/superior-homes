@@ -3,7 +3,7 @@ import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import CTAStrip from "@/components/sections/CTAStrip";
 import { floorPlans } from "@/data/floor-plans";
-import { Bed, Bath, Car, SquareIcon } from "lucide-react";
+import { Bed, Bath, Car, SquareIcon, ArrowUpRight } from "lucide-react";
 
 export const metadata = {
   title: "Floor Plans | Superior Homes (Qld) Pty Ltd",
@@ -22,14 +22,41 @@ export default function FloorPlansPage() {
 
       <section className="py-20 bg-[#0a0a0a]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Filter hint */}
-          <div className="flex flex-wrap gap-2 mb-10">
+          {/* Section header */}
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <div className="inline-flex items-center gap-2 bg-[#ff7302]/10 border border-[#ff7302]/30 text-[#ff7302] text-xs font-semibold uppercase tracking-widest px-4 py-2 rounded-full mb-3">
+                Our Range
+              </div>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-[#f5f5f5] tracking-tight">
+                Browse Floor Plans
+              </h2>
+            </div>
+            {/* Filter pills — desktop */}
+            <div className="hidden sm:flex flex-wrap gap-2">
+              {["All", "Colonial", "Modern", "Mediterranean"].map((style) => (
+                <span
+                  key={style}
+                  className={`text-xs font-semibold px-4 py-2 rounded-full border transition-colors ${
+                    style === "All"
+                      ? "bg-white border-white text-[#0a0a0a]"
+                      : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#ff7302] hover:text-[#ff7302] cursor-pointer"
+                  }`}
+                >
+                  {style}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Filter pills — mobile */}
+          <div className="flex sm:hidden flex-wrap gap-2 mb-8">
             {["All", "Colonial", "Modern", "Mediterranean"].map((style) => (
               <span
                 key={style}
                 className={`text-xs font-semibold px-4 py-2 rounded-full border transition-colors ${
                   style === "All"
-                    ? "bg-[#ff7302] border-[#ff7302] text-white"
+                    ? "bg-white border-white text-[#0a0a0a]"
                     : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#ff7302] hover:text-[#ff7302] cursor-pointer"
                 }`}
               >
@@ -44,10 +71,10 @@ export default function FloorPlansPage() {
               <Link
                 key={plan.slug}
                 href={`/floor-plans/${plan.slug}`}
-                className="group bg-[#111111] border border-[#2a2a2a] rounded-sm overflow-hidden hover:border-[#ff7302]/50 transition-all duration-200"
+                className="group block"
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
+                {/* Seed-style image frame */}
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#1a1a1a] mb-4 shadow-sm group-hover:shadow-[0_8px_32px_rgba(0,0,0,0.6)] transition-shadow duration-300">
                   <Image
                     src={plan.image}
                     alt={plan.name}
@@ -56,40 +83,49 @@ export default function FloorPlansPage() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   {/* Style badge */}
-                  <span className="absolute top-3 left-3 text-xs font-semibold bg-[#ff7302] text-white px-2 py-1 rounded-sm">
+                  <span className="absolute top-3 left-3 text-xs font-bold bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full">
                     {plan.style}
+                  </span>
+                  {/* Arrow icon — Seed-style */}
+                  <span className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <ArrowUpRight size={14} className="text-white" />
                   </span>
                 </div>
 
-                {/* Info */}
-                <div className="p-5">
-                  <h3 className="text-[#f5f5f5] font-bold text-lg mb-3">{plan.name}</h3>
-                  <div className="flex items-center gap-4 text-[#a0a0a0] text-sm mb-4">
+                {/* Card info below image */}
+                <div className="px-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="text-[#f5f5f5] font-bold text-base leading-snug">
+                      {plan.name}
+                    </h3>
+                    <ArrowUpRight
+                      size={16}
+                      className="text-[#a0a0a0] group-hover:text-[#ff7302] transition-colors flex-shrink-0 mt-0.5"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3 mt-2 text-[#a0a0a0] text-xs">
                     <span className="flex items-center gap-1">
-                      <Bed size={14} className="text-[#ff7302]" />
+                      <Bed size={12} className="text-[#ff7302]" />
                       {plan.bedrooms} Bed
                     </span>
                     <span className="flex items-center gap-1">
-                      <Bath size={14} className="text-[#ff7302]" />
+                      <Bath size={12} className="text-[#ff7302]" />
                       {plan.bathrooms} Bath
                     </span>
                     <span className="flex items-center gap-1">
-                      <Car size={14} className="text-[#ff7302]" />
+                      <Car size={12} className="text-[#ff7302]" />
                       {plan.garage} Garage
                     </span>
                     {plan.sqm && (
                       <span className="flex items-center gap-1">
-                        <SquareIcon size={14} className="text-[#ff7302]" />
+                        <SquareIcon size={12} className="text-[#ff7302]" />
                         {plan.sqm}m²
                       </span>
                     )}
                   </div>
-                  <p className="text-[#a0a0a0] text-sm leading-relaxed line-clamp-2">
+                  <p className="text-[#a0a0a0] text-sm leading-relaxed line-clamp-2 mt-2">
                     {plan.description}
                   </p>
-                  <div className="mt-4 text-[#ff7302] text-sm font-semibold group-hover:gap-2 flex items-center gap-1 transition-all">
-                    View Details →
-                  </div>
                 </div>
               </Link>
             ))}

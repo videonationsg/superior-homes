@@ -1,26 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 
 export default function Hero() {
   const [visible, setVisible] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 100);
     return () => clearTimeout(t);
   }, []);
 
+  const handleMouseEnter = () => videoRef.current?.play();
+  const handleMouseLeave = () => {
+    const v = videoRef.current;
+    if (v) { v.pause(); v.currentTime = 0; }
+  };
+
   return (
     <section
       className="relative min-h-[92vh] flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: "url(/images/hero-banner.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
+      {/* Background video — plays on hover, shows poster at rest */}
+      <video
+        ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        src="/images/hero-banner.webm"
+        poster="/images/hero-banner.jpg"
+        muted
+        loop
+        playsInline
+      />
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/80 via-[#0a0a0a]/70 to-[#0a0a0a]/90" />
 

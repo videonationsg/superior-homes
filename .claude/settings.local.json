@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:seed.bytedance.com)",
+      "Bash(git add src/components/sections/HomesFanCarousel.tsx src/app/page.tsx src/components/layout/Header.tsx)",
+      "Bash(git commit:*)",
+      "Bash(git checkout -b light-theme)",
+      "Bash(python3 -c \":*)",
+      "Bash(git add src/app/globals.css src/components/layout/Header.tsx src/components/layout/Footer.tsx src/components/sections/TrustStrip.tsx src/components/sections/AboutPreview.tsx src/components/sections/TestimonialsCarousel.tsx src/components/sections/CTAStrip.tsx src/components/ui/PageHero.tsx src/components/sections/HomesFanCarousel.tsx)",
+      "Bash(git add src/components/sections/Hero.tsx src/components/sections/HomeStyles.tsx src/components/ui/ src/data/ src/app/about-us/ src/app/construction-time/ src/app/contact/ src/app/experience/ src/app/floor-plans/ src/app/inclusions/ src/app/our-homes/ src/app/testimonials/ next.config.ts package.json package-lock.json src/app/layout.tsx public/images/)",
+      "Bash(git add src/components/sections/TrustStrip.tsx src/components/sections/AboutPreview.tsx src/components/sections/TestimonialsCarousel.tsx src/components/sections/CTAStrip.tsx src/components/layout/Footer.tsx src/components/ui/PageHero.tsx)",
+      "Bash(git checkout light-theme)",
+      "Bash(git merge master --no-edit)",
+      "Bash(git checkout --ours src/components/layout/Footer.tsx src/components/sections/AboutPreview.tsx src/components/sections/CTAStrip.tsx src/components/sections/TestimonialsCarousel.tsx src/components/sections/TrustStrip.tsx src/components/ui/PageHero.tsx)",
+      "Bash(git add src/components/layout/Footer.tsx src/components/sections/AboutPreview.tsx src/components/sections/CTAStrip.tsx src/components/sections/TestimonialsCarousel.tsx src/components/sections/TrustStrip.tsx src/components/ui/PageHero.tsx)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(git stash)",
+      "Bash(git checkout master)",
+      "Bash(git stash pop)",
+      "Bash(git stash drop)",
+      "Bash(git checkout light-theme -- src/components/sections/Hero.tsx)"
+    ]
+  }
+}
