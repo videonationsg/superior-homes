@@ -63,7 +63,9 @@ export default function Header() {
                     className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 group ${
                       isActive
                         ? "text-[#ff7302]"
-                        : "text-[#a0a0a0] hover:text-[#f5f5f5]"
+                        : scrolled
+                        ? "text-[#a0a0a0] hover:text-[#f5f5f5]"
+                        : "text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] hover:text-[#ff7302]"
                     }`}
                   >
                     {link.label}
